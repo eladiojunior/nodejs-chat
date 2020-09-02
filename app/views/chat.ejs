@@ -1,0 +1,106 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("a.exibe_chat").click(function(){
+			$("div.conversa").show();
+			$("div.participantes").hide();
+			ocultaNavbar();
+		});
+
+		$("a.exibe_participantes").click(function(){
+			$("div.participantes").show();
+			$("div.conversa").hide();
+			ocultaNavbar();
+		});
+	});
+	function ocultaNavbar(){
+		$("#btn_navbar_toggle").attr("class","navbar-toggle collapsed");
+		$("#navbar-collapse-1").attr("class","navbar-collapse collapse");
+		$("#btn_navbar_toggle").attr("aria-expanded","false");
+		$("#navbar-collapse-1").attr("aria-expanded","false");
+	}
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	var socket = io('http://localhost:8080');
+	$("form.mensagem").submit(function (){
+		var texto = $("input.mensagem").val();
+		var apelido = $("input.apelido").val();
+		var status_apelido = $("input.status_apelido").val();
+		socket.emit('mensagem', {nome: apelido, mensagem : texto, status_apelido: status_apelido});
+		$("input.status_apelido").val('1');
+		$("input.mensagem").val('');
+		$("input.mensagem").focus();
+		return false;
+	});
+	socket.on('mensagem', function (data){
+		var html = '';
+		html+="<div class='dialogo'>";
+		html+="<h4>"+data.nome+"</h4>";
+		html+="<p>"+data.mensagem+"</p></div>";
+		$("div.mensagens").append(html);2
+		window.scrollTo(0, document.body.scrollHeight);
+	});
+	socket.on('participantes', function (data){
+		var html = '';
+		html+="<span class='participante'><img src='images/ico_usuario.png'/>"+data.nome+"</span>";
+		$("div.lista_participantes").append(html);
+	});
+</script>
+<input type="hidden" class="apelido" name="apelido" value="<%=apelido%>">
+<input type="hidden" class="status_apelido" value="0">
+<div>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1" id="btn_navbar_toggle">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Chat</a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="#" class="exibe_chat">Conversas</a>
+					</li>
+					<li>
+						<a href="#" class="exibe_participantes">Participantes</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row conversa">
+			<div class="col-md-1"></div>
+			<div class="col-md-10 mensagens"></div>
+			<div class="col-md-1"></div>
+		</div>
+		<div class="row participantes" style="display:none">
+			<div class="col-md-1"></div>
+			<div class="col-md-10 lista_participantes">
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+	</div>
+
+	<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+		<div class="container">
+			<form class="mensagem">
+				<div class="panel-body campo-mensagem">
+					<div class="col-md-12">
+						<div class="input-group">
+							<input type="text" class="form-control mensagem" required="required" placeholder="Mensagem">
+							<span class="input-group-btn">
+								<button class="btn btn-default enviar" type="submit">>></button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</nav>
+</div>

@@ -1,0 +1,22 @@
+Instalação de pacotes no projeto;
+
+/> npm install express --save
+-- Framework para desenvolvimento WEB;
+
+/> npm install ejs --save
+-- Engine de Views
+
+/> npm install consign --save
+-- Autoload da aplicação para facilitar o desenvolvimento
+
+/> npm install body-parse --save
+-- Midleware que popula a variavel BODY das requisições.
+
+/> npm install express-validator --save
+-- Módulo de validação dos formulário das views;
+
+/> npm install express-ejs-layouts --save
+-- Módulo do framework express ejs para controle de layout;
+
+/> npm install socket.io --save
+-- Instalação do pacote de socker para interação multidirecional.

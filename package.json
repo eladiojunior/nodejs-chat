@@ -1,0 +1,21 @@
+{
+  "name": "nodejs-chat",
+  "version": "1.0.0",
+  "description": "Projeto de exemplo em Node.js de um chat.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Eladio Júnior",
+  "license": "ISC",
+  "dependencies": {
+    "body-parse": "^0.1.0",
+    "consign": "^0.1.6",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-validator": "^6.6.1",
+    "socket.io": "^2.3.0"
+  }
+}
